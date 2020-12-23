@@ -1,3 +1,19 @@
+lens = [64]; 
+for n = lens
+  rng(n);
+  a=@(n) 10*exp(-1j*pi/8*n);
+  g=[0:1:n-1];
+  v=a(g);
+  v = v - mean(v);
+  y1 = fft(v);
+  y2 = radix2fft(v);
+  figure();
+  stem(abs(y2));
+  err = sum(abs(y1 - y2));
+  assert(err < 1)
+end
+
+
 function w = radix2fft(v);
 
 % v should be a length-N column vector
